@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
-function App() {
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Auth from './pages/authentication/auth';
+import Intro from './pages/intro/intro';
+import Signup from './pages/authentication/signup';
+import Login from './pages/authentication/login';
+import Dashboard from './pages/dashboard/dashboard';
+import Protected from './pages/protected/protected';
+import Attendance from './pages/attendance/attendance';
+const App=()=> {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Intro/>} />
+          <Route path='auth' element={<Auth/>} >
+            <Route path='signup' element={<Signup/>} />
+            <Route path='login' element={<Login/>} />
+          </Route>
+          <Route path='/' element={<Protected/>}>
+            <Route path='dash'  element={<Dashboard/>} />
+          </Route>
+          <Route path='class/:cid' element={<Attendance/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

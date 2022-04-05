@@ -1,0 +1,121 @@
+.attendence-topdiv{
+    padding-top:4rem ;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    box-sizing: content-box;
+}
+.attendance-label-div{
+    display: flex;
+    display: 100%;
+    height: 3rem;
+    padding-right: 1rem;
+}
+.attendance-label{
+    height: 100%;
+    width: 20%;
+}
+.attendance-date{
+    height: 100%;
+    width: 70%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.attendence-fulldiv
+{
+    height: 50%;
+    width: 100%;
+    box-sizing: content-box;
+    display: flex;
+    align-items: flex-start;
+    overflow-y: scroll;
+    position: relative;
+}
+.attendence-leftdiv{
+    width: 20%;
+    border: .1px solid #555;
+    border-radius: 3px;
+    margin-right: 2px;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    padding-bottom: 4px;
+    display: flex;
+    overflow-y: scroll;
+    pointer-events: none;
+    align-items: flex-start;
+}
+.attendence-leftdiv::-webkit-scrollbar{
+    display: none;
+}
+.student-attr{
+    display: flex;
+    padding: 2px;
+    width: 100%;
+}
+.attr{
+    display: flex;
+    flex-direction: column;
+}
+.attr-label{
+    padding: 4px;
+    background-color: #cccccc;
+    height: 2rem;
+    margin-bottom: 4px;
+}
+.attr-label p
+{
+    margin: 0;
+    padding: 0;
+}
+.attr-name{
+    flex: 1;
+}
+.student-infodiv{
+    display: flex;
+    height: 3rem;
+}
+.attendence-display{
+    height: fit-content;
+    width: 70%;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    overflow-y: hidden;
+}
+.attendence-rightdiv{
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    
+}
+.attendence-display::-webkit-scrollbar{
+    display: none;
+}
+.column-date-div{
+    background-color: #cccccc;
+    height: 100%;
+    min-width: 3rem;
+    margin-left: 1px;
+    border: .1px solid #555;
+    border-radius: 3px;
+    overflow:hidden ;
+    margin-right: 1px;
+    box-sizing: border-box;
+}
+.column-par 
+{
+    margin: 0;
+    padding: 0;
+    
+}
+.column-date{
+    font-size: .7rem;
+    font-weight: 600;
+}
+.column-time{
+    font-size: .5rem;
+    font-weight: 500;
+}
