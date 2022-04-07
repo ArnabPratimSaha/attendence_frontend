@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import Button from '../../components/customButton/button';
+import Input from '../../components/customInput/input';
 import './style.css'
 const Auth=()=> {
     const [id,setId]=useState<string>('');
@@ -22,8 +24,13 @@ const Auth=()=> {
     }
   return (
     <div className='auth-full-div'>
-        <form onSubmit={handleFormSubmit}><input placeholder='Enter class id' type={'text'} name={id} value={id} onChange={e=>setId(e.target.value)} /><button type={'submit'}>Go</button> </form>
-        <Outlet/>
+            <form onSubmit={handleFormSubmit}>
+              <div className="class-join-div">
+                  <Input placeholder='Enter class id' type={'text'} name={id} value={id} onChange={e => setId(e.target.value)} />
+                  <Button style={{marginLeft:'1rem'}} name={'sub'} type={'submit'}>Go</Button>
+              </div>
+          </form>
+          <Outlet />
     </div>
   )
 }

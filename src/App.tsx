@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import './App.css';
 import {
   BrowserRouter,
@@ -26,6 +26,7 @@ const App=()=> {
             <Route path='dash'  element={<Dashboard/>} />
           </Route>
           <Route path='class/:cid' element={<Attendance/>} />
+          {/* <Route path='print' element={<Example/>} /> */}
         </Routes>
       </BrowserRouter>
     </div>

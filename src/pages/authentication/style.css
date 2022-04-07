@@ -1,0 +1,50 @@
+.class-join-div{
+    display: flex;
+    padding: 1rem;
+    margin: 3rem;
+    border-radius:5px ;
+    background-color: #eeeeee;
+    box-shadow: 2px 2px 3px 0 #cacaca;
+}
+.auth-full-div{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+
+}
+/* .class-join-div{
+    margin: 5rem 0;
+} */
+.auth-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #eeeeee;
+    height: 20rem;
+    max-width: 90%;
+    width: 28rem;
+    border-radius: 5px;
+    box-shadow: 4px 4px 4px 0 #cacaca;
+    margin-bottom: 5rem;
+}
+.password-div{
+    display: flex;
+}
+.auth-card-title{
+    color: #eeeeee;
+    margin-top: 1rem;
+    padding: 0;
+    text-shadow: 1px 2px 2px #222;
+}
+.auth-card-change{
+    justify-self: flex-end;
+    margin-bottom: 1rem;
+    font-family: 'Comfortaa', cursive;
+    font-weight: 600;
+    font-size: .9rem;
+}

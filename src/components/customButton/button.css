@@ -1,0 +1,16 @@
+.custom-button-fulldiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:  #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px 0 #cacaca;
+}
+.custom-button-fulldiv:hover{
+    box-shadow: none;
+}
+.custom-button-fulldiv:focus{
+    outline: none;
+}

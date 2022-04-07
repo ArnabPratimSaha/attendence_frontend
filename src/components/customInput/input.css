@@ -1,0 +1,26 @@
+.custominput-fulldiv{
+    width: 15rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 2px 2px 5px 0 #cacaca;
+    /* border: 1px solid #fff; */
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+}
+.input-focus{
+    box-shadow: none;
+}
+/* inset -1px -1px 4px 0 #dcdcdc */
+.custominput-input{
+    height: 100%;
+    width: 100%;
+    color: #666;
+    border: none;
+}
+.custominput-input:focus{
+    outline: none;
+}
+.custominput-input::placeholder{
+}

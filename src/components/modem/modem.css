@@ -1,0 +1,31 @@
+.modem-fulldiv{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modem-layer{
+    position: absolute;
+    background-color: #5b5b5b7f;
+    height: 100%;
+    width: 100%;
+}
+.modem-card{
+    position: absolute;
+    z-index: 2;
+    min-width: 20rem;
+    min-height: 10rem;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 5px;
+    background-color: #e1e1e1;
+    transform-origin: center;
+    transition: transform 200ms ease-in-out;
+    transform: scale(.2);
+}
+.modem_open{
+    transform: scale(1) ;
+}

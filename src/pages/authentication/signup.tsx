@@ -4,6 +4,8 @@ import { VscEye,VscEyeClosed } from 'react-icons/vsc';
 import {NavLink,useNavigate} from 'react-router-dom';
 import AuthResponse from '../../interfaces/authResponseData';
 import Cookies from 'js-cookie';
+import Input from '../../components/customInput/input';
+import Button from '../../components/customButton/button';
 
 const  Signup=()=> {
     const [showPassword,setShowPassword]=useState<boolean>(false);
@@ -25,9 +27,9 @@ const  Signup=()=> {
             });
             if(res.status===200){
                 const data:AuthResponse=res.data as AuthResponse;
-                Cookies.set('id',data.id);
-                Cookies.set('accesstoken',data.accesstoken);
-                Cookies.set('refreshtoken',data.refreshtoken);
+                Cookies.set('id',data.id,{expires:30});
+                Cookies.set('accesstoken',data.accesstoken,{expires:30});
+                Cookies.set('refreshtoken',data.refreshtoken,{expires:30});
                 navigate('/dashboard');
             }
             
@@ -36,17 +38,18 @@ const  Signup=()=> {
         }
     }
   return (
-    <div className='signup-full-div'>
+    <div className='auth-card signup-full-div'>
+        <h1 className='auth-card-title'>SIGN UP</h1>
         <form onSubmit={handleFormSubmit}>
-            <input required type={'text'} name={'name'} placeholder={'Enter Your name'} value={name} onChange={e=>setName(e.target.value) }/><br/>
-            <input required type={'email'} name={'email'} placeholder={'Enter Your email'} value={email}  onChange={e=>setEmail(e.target.value) }/><br/>
-            <div>
-                <input required type={showPassword?'text':'password'} name={'email'} value={password} onChange={e=>setPassword(e.target.value) } placeholder={'Enter Your password'} />
-                <button onClick={()=>setShowPassword(s=>!s)} type={'button'} name={'show'} title={'show'}>{showPassword?<VscEye/>:<VscEyeClosed/>}</button>
+            <Input required type={'text'} name={'name'} placeholder={'Enter Your name'} value={name} onChange={(e)=>setName(e.target.value) }/>
+            <Input style={{marginTop:'15px'}} required type={'email'} name={'email'} placeholder={'Enter Your email'} value={email}  onChange={e=>setEmail(e.target.value) }/>
+            <div className='password-div'>
+                <Input style={{marginTop:'15px'}} required type={showPassword?'text':'password'} name={'email'} value={password} onChange={e=>setPassword(e.target.value) } placeholder={'Enter Your password'} />
+                <Button style={{marginLeft:'10px',marginTop:'15px',height:'2rem',width:'2rem'}} onClick={()=>setShowPassword(s=>!s)} type={'button'} name={'show'}>{showPassword?<VscEye/>:<VscEyeClosed/>}</Button>
             </div>
-            <button type={'submit'} name={'submit'} title={'sign up'} >Sign up</button>
+            <Button style={{marginTop:'15px',padding:'5px 10px'}} type={'submit'} name={'submit'} >Sign up</Button>
         </form>
-        <div>
+        <div className='auth-card-change'>
             Switch to <NavLink to={'/auth/login'} >Login</NavLink>
         </div>
     </div>
