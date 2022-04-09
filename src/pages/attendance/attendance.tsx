@@ -1,12 +1,13 @@
 import axios,{AxiosRequestHeaders} from 'axios';
 import Cookies from 'js-cookie';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Column from '../../components/column/column';
 import StudentStat from '../../components/studentStat/studentStat';
 import { ClassInterface, Student } from '../../interfaces/classData';
 import './style.css'
 import { IoAdd } from 'react-icons/io5';
+import { FcPrint } from 'react-icons/fc';
 import Button from '../../components/customButton/button';
 import Input from '../../components/customInput/input';
 import Modem from '../../components/modem/modem';
@@ -93,6 +94,10 @@ function Attendance() {
         if (top && bottom) {
             if(device==='MOBILE'){
                 bottom.addEventListener('scroll',ev1)
+                top.ontouchmove=(e:Event)=>{
+                    e.preventDefault();
+                    top.scrollLeft+=0;
+                }
             }else{
                 top.addEventListener('scroll', ev2)
             }
@@ -183,6 +188,18 @@ function Attendance() {
     const handleColClick=(index:number)=>{
         navigate(`/class/${cid}/${index}`)
     }
+    
+    const getCount=useCallback(
+      (index:number):number => {
+        let num=0;
+        if(classData){
+            classData.students.forEach(s=>s.attendanceArray[index]&&num++);
+        }
+        return num;
+      },
+      [classData],
+    )
+    
     return (
         <div className='attendence-topdiv' ref={componentRef}>
             <Modem id='1' status={modemStatus} onClick={()=>setModemStatus(false)}>
@@ -190,7 +207,7 @@ function Attendance() {
                     <div className="student__add_data">
                         <div className="student__add_field">
                             <span>Name</span>
-                            <Input autoComplete='off' onChange={(e)=>setName(e.target.value)} required name='name' placeholder='Enter Name' type={'text'} className=' student__add_name' />
+                            <Input autoComplete='off' onChange={(e)=>setName(e.target.value)} required name='name' placeholder='Enter Name' type={'text'} className='student__add_name' />
                         </div>
                         <div className="student__add_field">
                             <span>Roll</span>
@@ -203,7 +220,7 @@ function Attendance() {
             <div className='attendance-label-div'>
                 <div className='attendance-label'>
                     <span>Student</span>
-                    <Button name='add' type='button' onClick={()=>setModemStatus(true)}>Add Student</Button>
+                    {access==='RW' &&<Button name='add' type='button' onClick={()=>setModemStatus(true)}>Add Student</Button>}
                 </div>
                 <div className='attendance-date' id='top'>
                     {classData && classData.attendanceArray.map((t: Date, index) => {
@@ -214,8 +231,8 @@ function Attendance() {
                                 <p className='column-par column-time'>{time.getHours()}:{time.getMinutes()}</p>
                             </div>
                             <div className="column-date-div__stat">
-                                <p>{classData.attendanceCount[index]}/{classData.students.length}</p>
-                                <p>{(classData.attendanceCount[index]/classData.students.length*100).toFixed(1)}%</p>
+                                <p>{getCount(index)}/{classData.students.length}</p>
+                                <p>{(getCount(index)/classData.students.length*100).toFixed(1)}%</p>
                             </div>
                         </div>
                     })}
@@ -224,20 +241,20 @@ function Attendance() {
                     </Button>}
                 </div>
                 <div className="overall-stats">
-                    Overall Attendance
-                                <ReactToPrint
-                    trigger={() => <button>Print this out!</button>}
-                    content={() => componentRef.current}
-      />
+                    <span>Overall Attendance</span> 
+                    <ReactToPrint
+                        trigger={() => <Button className='print-button' name='print' type='button'><FcPrint/></Button>}
+                        content={() => componentRef.current}
+                    />
                 </div>
             </div>
             <div className='attendence-fulldiv' >
-                <div className='attendence-leftdiv' >
+                {classData && <div className='attendence-leftdiv' >
                     {classData && classData.students.map((s,i)=><div onClick={()=>navigate(`/class/${cid}/student/${s.id}`)} key={s.id} style={{background:i%2===0?'#fff':'#eeeeee'}} className='student-attr'>
-                        <p>{s.roll}</p>
                         <p>{s.name}</p>
+                        <p>{s.roll}</p>
                     </div>)}
-                </div>
+                </div>} 
                 <div className='attendence-display' id='bottom'>
                     <div className='attendence-rightdiv' >
                         {classData && classData.attendanceArray.map((s, i) => <Column
@@ -254,9 +271,9 @@ function Attendance() {
                         </div>}
                     </div>
                 </div>
-                <div className="attendance-student-stat">
-                    {classData && classData.students.map((s,i)=><StudentStat style={{background:i%2!==0?'#eeeeee':"#fff"}} student={s} />)}
-                </div>
+                {classData &&<div className="attendance-student-stat">
+                    {classData.students.map((s,i)=><StudentStat className='attendance-student-stat__stat' style={{background:i%2!==0?'#eeeeee':"#fff"}} student={s} />)}
+                </div>}
             </div>
         </div>
     )
