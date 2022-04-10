@@ -1,0 +1,119 @@
+.dashboard-fulldiv{
+    width: 100%;
+    padding-top: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+    
+}
+.dashboard-topdiv{
+    display: flex;
+    background-color: #EEEEEE;
+    padding: 1rem 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.dashboard-logo{
+    display: flex;
+    align-items: flex-end;
+}
+.dashboard-icon{
+    font-size: 2rem;
+}
+.dashboard-logo span{
+    font-family: 'Gugi', cursive;
+    font-size: 2rem;
+    line-height: 2rem;
+}
+.class-create{
+    margin-top: 1rem;
+    padding: 5px 10px;
+    background-color: #0D7377;
+    color: #fff;
+    font-family: 'Gugi', cursive;
+}
+.class-create-icon{
+    color: #fff;
+    font-size: 1.2rem;
+}
+.dashboard-classes{
+    display: flex;
+    flex-direction: column;
+}
+.dashboard-classcard{
+    padding: 1rem 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    min-height: 5rem;
+    background-color: #f6f6f6;
+    box-shadow: 4px 4px 7px 0 #cacaca;
+    margin: 10px 0;
+    position: relative;
+}
+.dashboard-classcard:hover{
+    box-shadow: inset 0 0px 7px 0 #cacaca;
+}
+.dashboard-classcard__left{
+    cursor: pointer;
+    flex: 1;
+}
+.dashboard-classcard-classname p{
+    font-size: 1.5rem;
+    line-height: 1rem;
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa', cursive;
+    font-weight: 700;
+}
+.dashboard-classcard-classname span
+{
+    font-size: .6rem;
+}
+.classinfo-studentcount {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-end;
+}
+.classinfo-studentcount p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.2rem;
+}
+.classinfo-studentcount span{
+    margin: 0;
+    padding: 0;
+    font-size: .8rem;
+    line-height: .8rem;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.classinfo-attendencecount{
+    display: flex;
+    align-items: flex-end;
+}
+.classinfo-attendencecount p{
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1rem;
+}
+.classinfo-attendencecount span{
+    margin: 0;
+    padding: 0;
+    font-size: .6rem;
+    line-height: .6rem;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.dashboard-classcard__right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2rem;
+}
+@media only screen and (max-width: 600px) {
+    .dashboard-fulldiv{
+        padding: 1rem;
+    }
+}

@@ -6,11 +6,14 @@ import Cookies from 'js-cookie';
 import AuthResponse from '../../interfaces/authResponseData';
 import Input from '../../components/customInput/input';
 import Button from '../../components/customButton/button';
+import { login, User } from '../../redux/reducers/userReducer';
+import { useAppDispatch } from '../../redux/hook/hook';
 function Login() {
     const [showPassword,setShowPassword]=useState<boolean>(false);
     const [email,setEmail]=useState<string>('');
     const [password,setPassword]=useState<string>('');
     const navigate=useNavigate();
+    const dispatch=useAppDispatch()
     const handleFormSubmit:React.FormEventHandler<HTMLFormElement> | undefined=async(event):Promise<void>=>{
         try {
             event.preventDefault();
@@ -22,11 +25,13 @@ function Login() {
                 }
             });
             if(res.status===200){
-                const data:AuthResponse=res.data as AuthResponse;
-                Cookies.set('id',data.id,{expires:30});
-                Cookies.set('accesstoken',data.accesstoken,{expires:30});
-                Cookies.set('refreshtoken',data.refreshtoken,{expires:30});
-                navigate(`/dash`);
+                const user: User = {
+                    name: res.data.name,
+                    email: res.data.email,
+                    id:res.data.id, accesstoken:res.data.accesstoken, refreshtoken:res.data.refreshtoken
+                }
+                dispatch(login(user));
+                navigate(`/dash/${user.id}`);
             }
             
         } catch (error) {

@@ -2,10 +2,10 @@ import axios from 'axios';
 import React,{useState} from 'react'
 import { VscEye,VscEyeClosed } from 'react-icons/vsc';
 import {NavLink,useNavigate} from 'react-router-dom';
-import AuthResponse from '../../interfaces/authResponseData';
-import Cookies from 'js-cookie';
 import Input from '../../components/customInput/input';
 import Button from '../../components/customButton/button';
+import { useAppDispatch } from '../../redux/hook/hook';
+import { login, User } from '../../redux/reducers/userReducer';
 
 const  Signup=()=> {
     const [showPassword,setShowPassword]=useState<boolean>(false);
@@ -13,7 +13,7 @@ const  Signup=()=> {
     const [email,setEmail]=useState<string>('');
     const [password,setPassword]=useState<string>('');
     const navigate=useNavigate();
-
+    const dispatch=useAppDispatch();
 
     const handleFormSubmit:React.FormEventHandler<HTMLFormElement> | undefined=async(event):Promise<void>=>{
         try {
@@ -26,11 +26,9 @@ const  Signup=()=> {
                 }
             });
             if(res.status===200){
-                const data:AuthResponse=res.data as AuthResponse;
-                Cookies.set('id',data.id,{expires:30});
-                Cookies.set('accesstoken',data.accesstoken,{expires:30});
-                Cookies.set('refreshtoken',data.refreshtoken,{expires:30});
-                navigate('/dashboard');
+                const user:User=res.data as User;
+                dispatch(login(user))
+                navigate(`/dash/${user.id}`);
             }
             
         } catch (error) {

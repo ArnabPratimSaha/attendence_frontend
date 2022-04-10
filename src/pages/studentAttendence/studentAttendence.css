@@ -1,0 +1,81 @@
+.studentAttendence-fulldiv{
+    width: 100%;
+    padding-top: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.studentAttendence-topdiv{
+    display: flex;
+    background-color: #eeeeee;
+    padding: 1rem 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+.studentAttendence-infodiv{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 10rem;
+    flex: 1;
+    
+}
+.studentAttendence-infodiv__attribute p{
+    margin: 0;
+    padding: 0;
+}
+.studentAttendence-infodiv__attribute p:nth-child(1){
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1rem;
+    font-weight: 600;
+}
+.studentAttendence-infodiv__attribute p:nth-child(2){
+    font-family: 'Roboto Mono', monospace;
+}
+.studentAttendence-infodiv__attribute span
+{
+    font-family: 'Roboto Mono', monospace;
+    font-size: .6rem;
+    line-height: .5rem;
+
+}
+.studentAttendence-infodiv__data{
+    display: flex;
+}
+.studentAttendence-infodiv__data p{
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-family: 'Comfortaa', cursive;
+}
+.studentAttendence-infodiv__data p:nth-child(2){
+    margin-left: 10px;
+}
+.studentAttendence-rightdiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+.studentAttendence-attendance__card span{
+    font-size: 1rem;
+    color: #333;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.studentAttendence-attendance__card{
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    height: 5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+@media only screen and (max-width: 600px) {
+    .studentAttendence-fulldiv{
+        padding: .8rem;
+        padding-top: 2rem;
+    }
+}
