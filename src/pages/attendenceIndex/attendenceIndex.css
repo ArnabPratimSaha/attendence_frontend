@@ -1,0 +1,141 @@
+.attendenceindex-fulldiv{
+    width: 100%;
+    padding-top: 2rem;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.password_data{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    height: 10rem;
+    padding: 0 10px;
+}
+.password_button{
+    padding: 5px 10px;
+    background-color: #FF6B6B;
+    color: #fff;
+}
+.attendenceindex-infodiv{
+    background-color: #eeeeee;
+    padding: 1rem 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.attendenceindex-classheader{
+    display: flex;
+}
+.col-edit{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.delete-col{
+    color: #FF6B6B;
+}
+.attendenceindex-classData{
+    margin-bottom: 1rem;
+    flex: 1;
+}
+.print-icon{
+    cursor: pointer;
+    padding: 5px;
+    align-self: flex-start;
+}
+.attendenceindex-classData p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: 1rem;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.attendenceindex-classData span{
+    font-family: 'Roboto Mono', monospace;
+    font-size: .6rem;
+    line-height: .6rem;
+    margin: 0;
+    padding: 0;
+
+}
+.attendenceindex-datediv p{
+    margin: 0;
+    padding: 0;
+    font-size: .8rem;
+}
+.present_stat{
+    display: flex;
+}
+.present_stat p{
+    font-size: .7rem;
+    margin: 0;
+    padding: 0;
+    margin-right: 10px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.present_stat p:nth-child(2){
+    font-weight: 600;
+}
+.copytoclipboard-icon{
+    margin-left: 2px;
+    font-size: .7rem;
+    cursor: pointer;
+}
+.attendenceindex-attendance{
+}
+.attendenceindex-attendance__card{
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.attendenceindex-attendance__card__student{
+    flex: 1;
+}
+.card__student_attr{
+    margin-bottom: 5px;
+}
+.card__student_attr span{
+    font-size: 1.2rem;
+    color: #333;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.card__student_attr p{
+    margin: 0;
+    padding: 0;
+    font-size: .9rem;
+    color: #555;
+    font-family: 'Roboto Mono', monospace;
+}
+.card__student__id {
+    display: flex;
+}
+.card__student__id span{
+    font-family: 'Roboto Mono', monospace;
+    font-size: .5rem;
+    
+}
+.card__odd{
+    background-color: #f6f6f6;
+}
+.present-p,.absent-p{
+    font-family: 'Comfortaa', cursive;
+    font-size: .8rem;
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+}
+.present-p{
+    color: #6BCB77;
+}
+.absent-p{
+    color: #FF6B6B;
+}
+@media only screen and (max-width: 600px) {
+    .attendenceindex-fulldiv{
+        padding: .8rem;
+        padding-top: 2rem;
+    }
+}

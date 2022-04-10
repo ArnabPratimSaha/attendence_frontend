@@ -7,25 +7,24 @@ import StudentStat from '../../components/studentStat/studentStat';
 import { ClassInterface, Student } from '../../interfaces/classData';
 import './style.css'
 import { IoAdd } from 'react-icons/io5';
-import { FcPrint } from 'react-icons/fc';
 import Button from '../../components/customButton/button';
 import Input from '../../components/customInput/input';
 import Modem from '../../components/modem/modem';
-import ReactToPrint from 'react-to-print';
+import { useAppDispatch, useAppSelector } from '../../redux/hook/hook';
+import { setData, update } from '../../redux/reducers/attendenceReducer';
 function Attendance() {
     const { cid } = useParams();
-    const [access, setAccess] = useState<"RO" | "RW">('RO');
     const [modemStatus,setModemStatus]=useState<boolean>(false);
-    const [classData, setClassData] = useState<ClassInterface | undefined>();
-    const [id, setId] = useState<string | undefined>(Cookies.get('id'));
-    const [accesstoken, setAccesstoken] = useState<string | undefined>(Cookies.get('accesstoken'));
-    const [refreshtoken, setRefreshtoken] = useState<string | undefined>(Cookies.get('refreshtoken'));
+    const status=useAppSelector(s=>s.user.status);
+    const attendence=useAppSelector(s=>s.attendence.status)
+    const [access, setAccess] = useState<"RO" | "RW">('RO');
+    const dispatch=useAppDispatch();
     const [name,setName]=useState<string>('');
     const [roll,setRoll]=useState<string>('');
     const navigate=useNavigate();
-    const componentRef = useRef<any>();
-    const fetchData=async(setData:React.Dispatch<React.SetStateAction<ClassInterface | undefined>>,setAccess:React.Dispatch<React.SetStateAction<"RO" | "RW">>):Promise<void>=>{
+    const fetchData=useCallback(async():Promise<void>=>{
         try {
+            if(status==='WAITING'|| status==='NOT_AUTHORIZED'||attendence==='NOT_FOUND'||attendence==='WAITING')return;
             const res=await axios({
                 url: `${process.env.REACT_APP_BACKEND}/class`,
                 method: 'GET',
@@ -33,17 +32,19 @@ function Attendance() {
                     cid
                 }
             });
-            if (res.status === 200 && res.data) {
+            if(res.status===200){
                 const data: ClassInterface = res.data;
-                setData(data);
-                if (id && data.teachers.includes(id))
-                    setAccess('RW');
+                dispatch(setData(data))
             }
         } catch (error) {
             throw error;
         }
-
-    }
+    },[status,attendence])
+    useEffect(()=>{
+        if(status!=='NOT_AUTHORIZED' && status!=='WAITING'&& attendence!=='NOT_FOUND' && attendence!=='WAITING'){
+            setAccess( s=> attendence.teachers.includes(status.id)?'RW':'RO');
+        }
+    },[status,attendence])
     useEffect(() => {
         axios({
             url: `${process.env.REACT_APP_BACKEND}/class`,
@@ -54,9 +55,7 @@ function Attendance() {
         }).then(res => {
             if (res.status === 200 && res.data) {
                 const data: ClassInterface = res.data;
-                setClassData(data);
-                if (id && data.teachers.includes(id))
-                    setAccess('RW');
+                dispatch(setData(data))
             }
         }).catch(err=>{
 
@@ -108,14 +107,15 @@ function Attendance() {
                 bottom.removeEventListener('scroll',ev2);
             }
         }
-    }, []);
+    }, [attendence,status]);
     const handleAttendance:((remark: boolean, index: number, sid: string) => void)=async(remark:boolean,index:number,sid:string)=>{
         try {
-            if(access==='RO')return;
+            if(access==='RO'||status==='NOT_AUTHORIZED'||status==='WAITING')return;
+            dispatch(update({index,remark,sid}))
             const headers:AxiosRequestHeaders={
-                ['id']:id||'',
-                ['accesstoken']:accesstoken||'',
-                ['refreshtoken']:refreshtoken||'',
+                ['id']:status.id,
+                ['accesstoken']:status.accesstoken,
+                ['refreshtoken']:status.refreshtoken,
                 ['classid']:cid||''
             }
             const res=await axios({
@@ -127,20 +127,20 @@ function Attendance() {
                 },
                 headers:headers
             });
-            if(res.status===200){
-                await fetchData(setClassData,setAccess);
+            if(res.status!==200){
+                return dispatch(update({index,remark:!remark,sid}))
             }
         } catch (error) {
-            
+            return dispatch(update({index,remark:!remark,sid}))
         }
     }
     const handleAddColClick:((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined=async()=>{
         try {
-            if(access==='RO')return;
+            if(access==='RO'||status==='NOT_AUTHORIZED'||status==='WAITING')return;
             const headers:AxiosRequestHeaders={
-                ['id']:id||'',
-                ['accesstoken']:accesstoken||'',
-                ['refreshtoken']:refreshtoken||'',
+                ['id']:status.id,
+                ['accesstoken']:status.accesstoken,
+                ['refreshtoken']:status.refreshtoken,
                 ['classid']:cid||''
             }
             const res=await axios({
@@ -153,7 +153,7 @@ function Attendance() {
                 headers:headers
             });
             if(res.status===200){
-                await fetchData(setClassData,setAccess);
+                await fetchData();
             }
         } catch (error) {
             
@@ -162,11 +162,11 @@ function Attendance() {
     const handleStudentAddSubmit:React.FormEventHandler<HTMLFormElement> | undefined=async(ev)=>{
         try {
             ev.preventDefault();
-            if(access==='RO')return;
+            if(access==='RO'||status==='NOT_AUTHORIZED'||status==='WAITING')return;
             const headers:AxiosRequestHeaders={
-                ['id']:id||'',
-                ['accesstoken']:accesstoken||'',
-                ['refreshtoken']:refreshtoken||'',
+                ['id']:status.id,
+                ['accesstoken']:status.accesstoken,
+                ['refreshtoken']:status.refreshtoken,
                 ['classid']:cid||''
             }
             const res=await axios({
@@ -179,7 +179,7 @@ function Attendance() {
             });
             setModemStatus(false);
             if(res.status===200){
-                await fetchData(setClassData,setAccess);
+                await fetchData();
             }
         } catch (error) {
             
@@ -192,16 +192,21 @@ function Attendance() {
     const getCount=useCallback(
       (index:number):number => {
         let num=0;
-        if(classData){
-            classData.students.forEach(s=>s.attendanceArray[index]&&num++);
+        if(attendence!=='NOT_FOUND' && attendence!=='WAITING'){
+            attendence.students.forEach(s=>s.attendanceArray[index]&&num++);
         }
         return num;
       },
-      [classData],
+      [attendence],
     )
-    
+    if(attendence==='NOT_FOUND'){
+       return( <div>Not Found</div>)
+    }
+    if(attendence==='WAITING'){
+        return(<div>Loading</div>)
+    }
     return (
-        <div className='attendence-topdiv' ref={componentRef}>
+        <div className='attendence-topdiv'>
             <Modem id='1' status={modemStatus} onClick={()=>setModemStatus(false)}>
                 <form onSubmit={handleStudentAddSubmit}>
                     <div className="student__add_data">
@@ -223,16 +228,16 @@ function Attendance() {
                     {access==='RW' &&<Button name='add' type='button' onClick={()=>setModemStatus(true)}>Add Student</Button>}
                 </div>
                 <div className='attendance-date' id='top'>
-                    {classData && classData.attendanceArray.map((t: Date, index) => {
+                    {attendence.attendanceArray.map((t: Date, index) => {
                         const time: Date = new Date(t);
-                        return <div className={`column-date-div ${access}`} onClick={()=>handleColClick(index)}>
+                        return <div key={index} className={`column-date-div ${access}`} onClick={()=>handleColClick(index)}>
                             <div className="column-date-div__time">
                                 <p className='column-par column-date'>{time.getDay()}.{time.getMonth()}.{time.getFullYear()}</p>
                                 <p className='column-par column-time'>{time.getHours()}:{time.getMinutes()}</p>
                             </div>
                             <div className="column-date-div__stat">
-                                <p>{getCount(index)}/{classData.students.length}</p>
-                                <p>{(getCount(index)/classData.students.length*100).toFixed(1)}%</p>
+                                <p>{getCount(index)}/{attendence.students.length}</p>
+                                <p>{(getCount(index)/attendence.students.length*100).toFixed(1)}%</p>
                             </div>
                         </div>
                     })}
@@ -241,39 +246,35 @@ function Attendance() {
                     </Button>}
                 </div>
                 <div className="overall-stats">
-                    <span>Overall Attendance</span> 
-                    <ReactToPrint
-                        trigger={() => <Button className='print-button' name='print' type='button'><FcPrint/></Button>}
-                        content={() => componentRef.current}
-                    />
+                    <span>Overall Attendance</span>
                 </div>
             </div>
             <div className='attendence-fulldiv' >
-                {classData && <div className='attendence-leftdiv' >
-                    {classData && classData.students.map((s,i)=><div onClick={()=>navigate(`/class/${cid}/student/${s.id}`)} key={s.id} style={{background:i%2===0?'#fff':'#eeeeee'}} className='student-attr'>
+                <div className='attendence-leftdiv' >
+                    {attendence.students.map((s,i)=><div onClick={()=>navigate(`/class/${cid}/student/${s.id}`)} key={s.id} style={{background:i%2===0?'#fff':'#eeeeee'}} className='student-attr'>
                         <p>{s.name}</p>
                         <p>{s.roll}</p>
                     </div>)}
-                </div>} 
+                </div>
                 <div className='attendence-display' id='bottom'>
                     <div className='attendence-rightdiv' >
-                        {classData && classData.attendanceArray.map((s, i) => <Column
+                        {attendence.attendanceArray.map((s, i) => <Column
                             onClick={handleAttendance}
                             key={i} 
-                            time={new Date(classData.attendanceArray[i])}
+                            time={new Date(attendence.attendanceArray[i])}
                             index={i}
-                            attendanceArray={classData.students.map(s => s.attendanceArray[i])} 
+                            attendanceArray={attendence.students.map(s => s.attendanceArray[i])} 
                             access={access} 
-                            sidArray={classData.students.map(s => s.id)}
+                            sidArray={attendence.students.map(s => s.id)}
                             />)}
                         {access ==='RW' && <div className="attendence-rightdiv__add">
 
                         </div>}
                     </div>
                 </div>
-                {classData &&<div className="attendance-student-stat">
-                    {classData.students.map((s,i)=><StudentStat className='attendance-student-stat__stat' style={{background:i%2!==0?'#eeeeee':"#fff"}} student={s} />)}
-                </div>}
+                <div className="attendance-student-stat">
+                    {attendence.students.map((s,i)=><StudentStat key={i} className='attendance-student-stat__stat' style={{background:i%2!==0?'#eeeeee':"#fff"}} student={s} />)}
+                </div>
             </div>
         </div>
     )
