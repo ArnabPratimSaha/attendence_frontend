@@ -98,6 +98,7 @@
     font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
     line-height: 1rem;
+    margin-left: 2px;
 }
 .classinfo-attendencecount span{
     margin: 0;
@@ -111,6 +112,20 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 2rem;
+}
+.dashboard-classes_null{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    font-size: 1rem;
+    font-family: 'Comfortaa', cursive;
+    margin-top: 1rem;
+    align-items: center;
+}
+.dashboard-classes_null .class-create{
+    align-self: center ;
+    margin: 0;
+    margin-left: 10px;
 }
 @media only screen and (max-width: 600px) {
     .dashboard-fulldiv{

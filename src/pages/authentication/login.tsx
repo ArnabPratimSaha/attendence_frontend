@@ -50,7 +50,7 @@ function Login() {
                 <Input style={{marginTop:'15px'}} required type={showPassword?'text':'password'} name={'email'} placeholder={'Enter Your password'} value={password} onChange={e=>setPassword(e.target.value) } />
                 <Button style={{marginLeft:'10px',marginTop:'15px',height:'2rem',width:'2rem'}} onClick={(e)=>setShowPassword(s=>!s)} type={'button'} name={'show'} >{showPassword?<VscEye/>:<VscEyeClosed/>}</Button>
             </div>
-            <Button style={{marginTop:'15px',padding:'5px 10px'}}  type={'submit'} name={'submit'} >Login In</Button>
+            <Button  className='auth-button login-button'  type={'submit'} name={'submit'} >Login</Button>
         </form>
         <div className='auth-card-change'>
             Switch to <NavLink to={'/auth/signup'} >Sign up</NavLink>

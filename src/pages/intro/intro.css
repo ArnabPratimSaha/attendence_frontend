@@ -1,0 +1,86 @@
+.intro-fulldiv{
+    padding: 20px 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 25rem;
+    height: calc(100vh - 4rem - 5px);
+}
+.intro-topdiv{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.topintro-leftdiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    height: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.leftdiv-top{
+    justify-self: flex-start;
+    margin-top: 5rem;
+}
+.leftdiv-top h1{
+    font-size: 3rem;
+    line-height: 2rem;
+    margin: 0;
+    padding: 0;
+    font-family: 'Gugi', cursive;
+    letter-spacing: 3px;
+    font-weight: 400;
+}
+.leftdiv-top span{
+    text-transform: capitalize;
+    letter-spacing: 2px;
+}
+.leftdiv-button{
+    justify-self: flex-end;
+    margin-bottom: 5rem;
+    display: flex;
+    align-items: center;
+}
+.lottie-animation{
+
+}
+.intro-class-button{
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    background-color: #4D96FF;
+    color: #fff;
+}
+.leftdiv-button span{
+    font-size: 1.2rem;
+    margin-right: 10px;
+    font-family: 'Comfortaa', cursive;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+@media only screen and (max-width: 600px) {
+    .intro-fulldiv{
+        padding: 20px 5px;
+    }
+    .lottie-animation{
+        display: none;
+    }
+    .leftdiv-top h1{
+        font-size: 2.5rem;
+    }
+    .leftdiv-top span{
+        font-size: 1rem;
+    }
+    .topintro-leftdiv{
+        padding: 1rem;
+    }
+    .leftdiv-button span{
+        font-size: 1rem;
+    }
+    .intro-class-button{
+        padding:10px;
+        font-size: 1rem;
+        margin-left: 10px;
+    }
+
+}

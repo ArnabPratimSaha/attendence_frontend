@@ -73,7 +73,7 @@ const Navbar = () => {
                         </NavLink>
                     </div>}
                     {status !== 'NOT_AUTHORIZED' && status!=='WAITING' && <div className='rightdiv-logout'>
-                        {status.name}
+                        <span>{status.name.slice(0,13)}{status.name.slice(13,status.name.length)&&'...'}</span> 
                         <Button onClick={handleLogout} className='logout' name='logout' type='button'>Logout</Button>
                     </div>}
                 </div>

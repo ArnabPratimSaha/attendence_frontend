@@ -7,11 +7,12 @@ import StudentStat from '../../components/studentStat/studentStat';
 import { ClassInterface, Student } from '../../interfaces/classData';
 import './style.css'
 import { IoAdd } from 'react-icons/io5';
+import { IoMdAddCircleOutline } from 'react-icons/io';
 import Button from '../../components/customButton/button';
 import Input from '../../components/customInput/input';
 import Modem from '../../components/modem/modem';
 import { useAppDispatch, useAppSelector } from '../../redux/hook/hook';
-import { setData, update } from '../../redux/reducers/attendenceReducer';
+import { setData, setStatus, update } from '../../redux/reducers/attendenceReducer';
 function Attendance() {
     const { cid } = useParams();
     const [modemStatus,setModemStatus]=useState<boolean>(false);
@@ -22,6 +23,7 @@ function Attendance() {
     const [name,setName]=useState<string>('');
     const [roll,setRoll]=useState<string>('');
     const navigate=useNavigate();
+    const targetRef=useRef<HTMLDivElement | null>(null);
     const fetchData=useCallback(async():Promise<void>=>{
         try {
             if(status==='WAITING'|| status==='NOT_AUTHORIZED'||attendence==='NOT_FOUND'||attendence==='WAITING')return;
@@ -55,11 +57,13 @@ function Attendance() {
         }).then(res => {
             if (res.status === 200 && res.data) {
                 const data: ClassInterface = res.data;
-                dispatch(setData(data))
+                return dispatch(setData(data))
             }
+            dispatch(setStatus('NOT_FOUND'));
         }).catch(err=>{
-
+            dispatch(setStatus('NOT_FOUND'));
         })
+        return ()=>{dispatch(setStatus('WAITING'))}
     }, []);
     const [device,setDevice]=useState<"MOBILE"|"PC">((window.innerWidth <= 800  )?'MOBILE':'PC');
     const ev0=()=>{
@@ -99,6 +103,9 @@ function Attendance() {
                 }
             }else{
                 top.addEventListener('scroll', ev2)
+                bottom.onscroll=(ev)=>{
+                    bottom.scrollLeft+=0;
+                }
             }
         }        
         return ()=>{
@@ -224,15 +231,15 @@ function Attendance() {
             </Modem>
             <div className='attendance-label-div'>
                 <div className='attendance-label'>
-                    <span>Student</span>
-                    {access==='RW' &&<Button name='add' type='button' onClick={()=>setModemStatus(true)}>Add Student</Button>}
+                    <span>Students</span>
+                    {access==='RW' &&<Button name='add' type='button' className='student-add' onClick={()=>setModemStatus(true)}>{ device==='MOBILE'?<IoMdAddCircleOutline/>:'Add Student'}</Button>}
                 </div>
                 <div className='attendance-date' id='top'>
                     {attendence.attendanceArray.map((t: Date, index) => {
                         const time: Date = new Date(t);
                         return <div key={index} className={`column-date-div ${access}`} onClick={()=>handleColClick(index)}>
                             <div className="column-date-div__time">
-                                <p className='column-par column-date'>{time.getDay()}.{time.getMonth()}.{time.getFullYear()}</p>
+                                <p className='column-par column-date'>{time.getDate()}.{time.getMonth()}.{time.getFullYear().toString().slice(2,4)}</p>
                                 <p className='column-par column-time'>{time.getHours()}:{time.getMinutes()}</p>
                             </div>
                             <div className="column-date-div__stat">
@@ -246,16 +253,20 @@ function Attendance() {
                     </Button>}
                 </div>
                 <div className="overall-stats">
-                    <span>Overall Attendance</span>
+                    <span>{device==='PC'?`Overall Attendance`:'Attendence'}</span>
                 </div>
             </div>
             <div className='attendence-fulldiv' >
-                <div className='attendence-leftdiv' >
+                {attendence.students.length===0&&<div className='attendence-null'>
+                    <p>No Student Found</p>
+                    <Button type='button' name='add' className='student-add' onClick={()=>setModemStatus(true)} >Add Student</Button>
+                </div>}
+                {attendence.students.length!==0&&<div className='attendence-leftdiv' >
                     {attendence.students.map((s,i)=><div onClick={()=>navigate(`/class/${cid}/student/${s.id}`)} key={s.id} style={{background:i%2===0?'#fff':'#eeeeee'}} className='student-attr'>
                         <p>{s.name}</p>
                         <p>{s.roll}</p>
                     </div>)}
-                </div>
+                </div>}
                 <div className='attendence-display' id='bottom'>
                     <div className='attendence-rightdiv' >
                         {attendence.attendanceArray.map((s, i) => <Column
@@ -267,14 +278,14 @@ function Attendance() {
                             access={access} 
                             sidArray={attendence.students.map(s => s.id)}
                             />)}
-                        {access ==='RW' && <div className="attendence-rightdiv__add">
+                        {access ==='RW' && <div ref={targetRef} className="attendence-rightdiv__add">
 
                         </div>}
                     </div>
                 </div>
-                <div className="attendance-student-stat">
+                {attendence.students.length!==0&&<div className="attendance-student-stat">
                     {attendence.students.map((s,i)=><StudentStat key={i} className='attendance-student-stat__stat' style={{background:i%2!==0?'#eeeeee':"#fff"}} student={s} />)}
-                </div>
+                </div>}
             </div>
         </div>
     )

@@ -127,7 +127,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="dashboard-classes">
-          {classData.length === 0 && <div>No Classes found</div>}
+          {classData.length === 0 && <div className='dashboard-classes_null'>No Classes found <Button name='add' type='button' onClick={handleClassCreate} className='class-create'><MdClass className='class-create-icon' />Create Class</Button></div>}
           {classData.map((c, i) => <div key={i} className={`dashboard-classcard`}>
             <div className="dashboard-classcard__left" onClick={() => navigate(`/class/${c.id}`)}>
               <div className="dashboard-classcard-classname">

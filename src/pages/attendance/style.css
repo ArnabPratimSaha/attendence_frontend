@@ -15,11 +15,21 @@
     height: 100%;
     width: 15rem;
     display: flex;
+    flex-direction: column;
     border-radius: 5px;
-    border: 1px solid #444;
+    background-color: #eeeeee;
+    border: .5px solid #cccccc;
     box-sizing: border-box;
     align-items: center;
-    background-color: #eeeeee;
+    justify-content: center;
+}
+.attendance-label span{
+    font-size: .9rem;
+    font-family: 'Comfortaa', cursive;
+}
+.attendance-label .student-add{
+    font-size: .8rem;
+    margin: 0;
 }
 .attendance-label-roll,.attendance-label-name{
     display: flex;
@@ -46,9 +56,9 @@
 .overall-stats{
     width: calc(9rem + .7rem);
     padding: 0 5px;
-    border: 1px solid #444;
-    box-sizing: border-box;
+    border: .5px solid #cacaca;
     border-radius: 5px;
+    box-sizing: border-box;
     background-color: #eeeeee;
     display: flex;
     justify-content: center;
@@ -107,6 +117,7 @@
     width: 100%;
     height: 3rem;
     cursor: pointer;
+    box-sizing: border-box;
     flex-direction: column;
     justify-content: center;
     padding: 0 5px;
@@ -189,12 +200,13 @@
     display: none;
 }
 .column-date-div{
-    background-color: #cccccc;
+    background-color: #4D96FF;
+    color: #fff;
     height: 100%;
     min-width: 3rem;
     margin-left: 1px;
-    border: .1px solid #555;
     border-radius: 3px;
+    padding: 1px;
     overflow:hidden ;
     margin-right: 1px;
     box-sizing: border-box;
@@ -205,13 +217,13 @@
 }
 .column-date-div:hover
 {
-    background-color: #fff;
+    background-color: #eeeeee;
+    color: #333;
 }
 .column-par 
 {
     margin: 0;
     padding: 0;
-    
 }
 .column-date{
     font-size: .7rem;
@@ -224,7 +236,8 @@
 .attendance-student-stat{
     width: 9rem;
     min-width: 5rem;
-    border: 1px solid #444;
+    border: .1px solid #444;
+    border-radius: 5px;
     padding-bottom: 5px;
     box-sizing: border-box;
     padding-top: 2px;
@@ -242,7 +255,6 @@
     margin: 0;
     font-size: .5rem;
     font-weight: 600;
-    color: #0D7377;
     font-family: 'Roboto Condensed', sans-serif;
 }
 .attendence-rightdiv__add{
@@ -263,6 +275,26 @@
 .print-button{
     padding: 5px;
 }
+.attendence-null{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.attendence-null p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    font-family: 'Comfortaa', cursive;
+}
+.student-add{
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #41AEA9;
+    color: #fff;
+    font-size: 1rem;
+}
 @media only screen and (max-width: 600px) {
     .attendance-label,.attendence-leftdiv,.overall-stats,.attendance-student-stat{
         width: 5rem;
@@ -271,7 +303,7 @@
         font-size: .6rem;
     }
     .overall-stats span{
-        font-size: .5rem;
+        font-size: .7rem;
     }
     .attendance-date::-webkit-scrollbar{
         display: none;
@@ -279,6 +311,10 @@
     .student-attr p:nth-child(1){
         font-size: .5rem;
         
+    }
+    .attendance-label span{
+        font-size: .7rem;
+        margin-bottom: 5px;
     }
     .student-attr p:nth-child(2){
         font-size: .5rem;
@@ -293,5 +329,10 @@
     .attendence-fulldiv::-webkit-scrollbar {
         display: none;
     }
-    
+    .attendence-null p{
+        font-size: .8rem;
+    }
+    .student-add{
+        font-size: .8rem;
+    }
   }

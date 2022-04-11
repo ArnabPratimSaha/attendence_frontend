@@ -45,7 +45,7 @@ const  Signup=()=> {
                 <Input style={{marginTop:'15px'}} required type={showPassword?'text':'password'} name={'email'} value={password} onChange={e=>setPassword(e.target.value) } placeholder={'Enter Your password'} />
                 <Button style={{marginLeft:'10px',marginTop:'15px',height:'2rem',width:'2rem'}} onClick={()=>setShowPassword(s=>!s)} type={'button'} name={'show'}>{showPassword?<VscEye/>:<VscEyeClosed/>}</Button>
             </div>
-            <Button style={{marginTop:'15px',padding:'5px 10px'}} type={'submit'} name={'submit'} >Sign up</Button>
+            <Button  className='auth-button signup-button'  type={'submit'} name={'submit'} >Sign up</Button>
         </form>
         <div className='auth-card-change'>
             Switch to <NavLink to={'/auth/login'} >Login</NavLink>
