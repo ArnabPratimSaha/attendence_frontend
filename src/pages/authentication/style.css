@@ -1,6 +1,7 @@
 .class-join-div{
     display: flex;
     padding: 1rem;
+    box-sizing: border-box;
     margin: 3rem;
     border-radius:5px ;
     background-color: #eeeeee;
@@ -36,10 +37,10 @@
     display: flex;
 }
 .auth-card-title{
-    color: #fff;
+    color: #213E3B;
     margin-top: 1rem;
     padding: 0;
-    text-shadow: 1px 2px 2px #222;
+    text-shadow: 2px 2px 5px #222;
 }
 .auth-card-change{
     justify-self: flex-end;
@@ -47,4 +48,19 @@
     font-family: 'Comfortaa', cursive;
     font-weight: 600;
     font-size: .9rem;
+}
+.auth-button{
+    margin-top: 1rem;
+    padding: 7px 10px;
+    font-size: .9rem;
+    letter-spacing: 2px;
+    font-family: 'Gugi', cursive;
+
+    color: #fff;
+}
+.login-button{
+    background-color: #6BCB77;
+}
+.signup-button{
+    background-color: #FF6B6B;
 }

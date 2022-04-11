@@ -27,10 +27,13 @@ export const attendenceSlice=createSlice({
                     s.attendanceArray[data.payload.index]=data.payload.remark;
                 }
             })
-        }
+        },
+        setStatus:(state,data:PayloadAction<"WAITING"|"NOT_FOUND">)=>{
+            state.status=data.payload;
+        },
     }
 })
-export const {setData,update}=attendenceSlice.actions;
+export const {setData,update,setStatus}=attendenceSlice.actions;
 export const attendenceReducer=attendenceSlice.reducer;
 
 export type userType=typeof attendenceSlice.getInitialState

@@ -1,4 +1,4 @@
-import React, { useState ,useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import {
   BrowserRouter,
@@ -20,11 +20,11 @@ import { useAppDispatch } from './redux/hook/hook';
 import { login, logout, User } from './redux/reducers/userReducer';
 import axios, { AxiosRequestHeaders } from 'axios';
 
-const App=()=> {
-  const dispatch=useAppDispatch();
-  useEffect(()=>{
+const App = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
 
-    const id=Cookies.get('id')
+    const id = Cookies.get('id')
     const accesstoken = Cookies.get('accesstoken')
     const refreshtoken = Cookies.get('refreshtoken')
     if (!id || !accesstoken || !refreshtoken) {
@@ -41,36 +41,36 @@ const App=()=> {
         headers: headers
       }).then(res => {
         if (res.status === 200) {
-          const user:User={
-            name:res.data.name,
-            email:res.data.email,
-            id,accesstoken,refreshtoken
+          const user: User = {
+            name: res.data.name,
+            email: res.data.email,
+            id, accesstoken, refreshtoken
           }
           dispatch(login(user))
-        }else{
+        } else {
           dispatch(logout())
         }
-      }).catch(err => { dispatch(logout())})
+      }).catch(err => { dispatch(logout()) })
     }
 
-  },[])
+  }, [])
   return (
     <div className="App">
       <BrowserRouter>
         <Routes >
-          <Route element={<Navbar/>}>
-            <Route path='/' element={<Intro/>} />
-            <Route path='auth' element={<Auth/>} >
-              <Route path='signup' element={<Signup/>} />
-              <Route path='login' element={<Login/>} />
+          <Route element={<Navbar />}>
+            <Route path='/' element={<Intro />} />
+            <Route path='auth' element={<Auth />} >
+              <Route path='signup' element={<Signup />} />
+              <Route path='login' element={<Login />} />
             </Route>
-            <Route path='/' element={<Protected/>}>
-              <Route path='dash/:id'  element={<Dashboard/>} />
+            <Route path='/' element={<Protected />}>
+              <Route path='dash/:id' element={<Dashboard />} />
             </Route>
+            <Route path='class/:cid/student/:sid' element={<StudentAttendence />} />
+            <Route path='class/:cid/:index' element={<AttendenceIndex />} />
           </Route>
-          <Route path='class/:cid' element={<Attendance/>} />
-          <Route path='class/:cid/student/:sid' element={<StudentAttendence/>} />
-          <Route path='class/:cid/:index' element={<AttendenceIndex/>} />
+          <Route path='class/:cid' element={<Attendance />} />
         </Routes>
       </BrowserRouter>
     </div>
