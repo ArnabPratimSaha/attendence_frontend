@@ -23,6 +23,31 @@
     align-items: center;
     justify-content: center;
 }
+.attendance-label_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sort_inactive,.sort_active{
+    box-shadow: 0 0 5px 0 #555;
+    margin-bottom: 0;
+    padding:1px 5px;
+    font-size: 1rem;
+    border-radius: 4px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+.sort_inactive:hover,.sort_active:hover{
+    box-shadow:none;
+}
+.sort_inactive{
+    color: #444;
+    background-color: #fff;
+}
+.sort_active{
+    background-color: #2666CF;
+    color: #fff;
+}
 .attendance-label span{
     font-size: .9rem;
     font-family: 'Comfortaa', cursive;

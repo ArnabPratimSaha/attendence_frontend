@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './userReducer';
-import { attendenceReducer } from './attendenceReducer';
+import { attendanceReducer } from './attendenceReducer';
 import { classReducer } from './classReducer';
 const store = configureStore({
     reducer: {
       user:userReducer,
-      attendence:attendenceReducer,
+      attendence:attendanceReducer,
       classData:classReducer
     },
 })

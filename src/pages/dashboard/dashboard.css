@@ -105,8 +105,6 @@
     font-family: 'Roboto Mono', monospace;
     line-height: 1.2rem;
 }
-.classinfo-studentcount span{
-}
 .classinfo-attendencecount{
     display: flex;
     align-items: flex-end;
@@ -119,8 +117,6 @@
     font-size: 1.2rem;
     font-family: 'Roboto Mono', monospace;
     line-height: 1.2rem;
-}
-.classinfo-attendencecount span{
 }
 .dashboard-classcard__right{
     display: flex;
