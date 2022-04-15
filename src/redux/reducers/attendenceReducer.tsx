@@ -13,12 +13,21 @@ interface UpdateInterface{
     index:number,
     remark:boolean,
 }
-export const attendenceSlice=createSlice({
-    name:'Attendence Reducer',
+interface AttendanceAddInterface{
+    data:ClassInterface,
+    sort:"ASCEND"|"DECEND"
+}
+
+export const attendanceSlice=createSlice({
+    name:'Attendance Reducer',
     initialState,
     reducers:{
-        setData:(state,data:PayloadAction<ClassInterface>)=>{
-            state.status=data.payload;
+        setData:(state,data:PayloadAction<AttendanceAddInterface>)=>{
+            if(data.payload.sort==='ASCEND')
+                data.payload.data.students = data.payload.data.students.sort((a, b) => +a.roll - +b.roll);
+            else 
+                data.payload.data.students = data.payload.data.students.sort((a, b) => +b.roll - +a.roll);
+            state.status = data.payload.data;
         },
         update:(state,data:PayloadAction<UpdateInterface>)=>{
             if(state.status==='NOT_FOUND'||state.status==='WAITING')return;
@@ -31,9 +40,16 @@ export const attendenceSlice=createSlice({
         setStatus:(state,data:PayloadAction<"WAITING"|"NOT_FOUND">)=>{
             state.status=data.payload;
         },
+        sortAttandance:(status,data:PayloadAction<"ASCEND"|"DECEND">)=>{
+            if(status.status==='NOT_FOUND'||status.status==='WAITING')return;
+            if(data.payload==='ASCEND')
+                status.status.students=status.status.students.sort((a,b)=>+a.roll-+b.roll)
+            else
+            status.status.students=status.status.students.sort((a,b)=>+b.roll-+a.roll)
+        }
     }
 })
-export const {setData,update,setStatus}=attendenceSlice.actions;
-export const attendenceReducer=attendenceSlice.reducer;
+export const {setData,update,setStatus,sortAttandance}=attendanceSlice.actions;
+export const attendanceReducer=attendanceSlice.reducer;
 
-export type userType=typeof attendenceSlice.getInitialState
+export type userType=typeof attendanceSlice.getInitialState

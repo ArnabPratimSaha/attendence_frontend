@@ -8,11 +8,12 @@ import { ClassInterface, Student } from '../../interfaces/classData';
 import './style.css'
 import { IoAdd } from 'react-icons/io5';
 import { IoMdAddCircleOutline } from 'react-icons/io';
+import { BsSortDownAlt } from 'react-icons/bs';
 import Button from '../../components/customButton/button';
 import Input from '../../components/customInput/input';
 import Modem from '../../components/modem/modem';
 import { useAppDispatch, useAppSelector } from '../../redux/hook/hook';
-import { setData, setStatus, update } from '../../redux/reducers/attendenceReducer';
+import { setData, setStatus, sortAttandance, update } from '../../redux/reducers/attendenceReducer';
 import Loading from '../../components/loading/loading';
 import {Helmet} from 'react-helmet'
 
@@ -21,6 +22,7 @@ function Attendance() {
     const [modemStatus,setModemStatus]=useState<boolean>(false);
     const status=useAppSelector(s=>s.user.status);
     const attendence=useAppSelector(s=>s.attendence.status)
+    const [sort,setSort]=useState<boolean>(true);
     const [access, setAccess] = useState<"RO" | "RW">('RO');
     const dispatch=useAppDispatch();
     const [name,setName]=useState<string>('');
@@ -39,7 +41,7 @@ function Attendance() {
             });
             if(res.status===200){
                 const data: ClassInterface = res.data;
-                dispatch(setData(data))
+                dispatch(setData({data,sort:sort?'ASCEND':'DECEND'}))
             }
         } catch (error) {
             throw error;
@@ -50,6 +52,9 @@ function Attendance() {
             setAccess( s=> attendence.teachers.includes(status.id)?'RW':'RO');
         }
     },[status,attendence])
+    useEffect(()=>{
+        dispatch(sortAttandance(sort?'ASCEND':'DECEND'));
+    },[sort])
     useEffect(() => {
         axios({
             url: `${process.env.REACT_APP_BACKEND}/class`,
@@ -60,7 +65,7 @@ function Attendance() {
         }).then(res => {
             if (res.status === 200 && res.data) {
                 const data: ClassInterface = res.data;
-                return dispatch(setData(data))
+                return dispatch(setData({data,sort:sort?'ASCEND':'DECEND'}))
             }
             dispatch(setStatus('NOT_FOUND'));
         }).catch(err=>{
@@ -237,7 +242,10 @@ function Attendance() {
             <div className='attendance-label-div'>
                 <div className='attendance-label'>
                     <span>Students</span>
-                    {access==='RW' &&<Button name='add' type='button' className='student-add' onClick={()=>setModemStatus(true)}>{ device==='MOBILE'?<IoMdAddCircleOutline/>:'Add Student'}</Button>}
+                    <div className="attendance-label_button">
+                        {access==='RW' &&<Button name='add' type='button' className='student-add' onClick={()=>setModemStatus(true)}>{ device==='MOBILE'?<IoMdAddCircleOutline/>:'Add Student'}</Button>}
+                        <div className={`${sort?'sort_active':'sort_inactive'}`} onClick={()=>setSort(s=>!s)}><BsSortDownAlt/></div> 
+                    </div>
                 </div>
                 <div className='attendance-date' id='top'>
                     {attendence.attendanceArray.map((t: Date, index) => {
@@ -276,16 +284,13 @@ function Attendance() {
                     <div className='attendence-rightdiv' >
                         {attendence.attendanceArray.map((s, i) => <Column
                             onClick={handleAttendance}
-                            key={i} 
+                            key={i}
                             time={new Date(attendence.attendanceArray[i])}
                             index={i}
-                            attendanceArray={attendence.students.map(s => s.attendanceArray[i])} 
-                            access={access} 
+                            attendanceArray={attendence.students.map(s => s.attendanceArray[i])}
+                            access={access}
                             sidArray={attendence.students.map(s => s.id)}
-                            />)}
-                        {access ==='RW' && <div ref={targetRef} className="attendence-rightdiv__add">
-
-                        </div>}
+                        />)}
                     </div>
                 </div>
                 {attendence.students.length!==0&&<div className="attendance-student-stat">
