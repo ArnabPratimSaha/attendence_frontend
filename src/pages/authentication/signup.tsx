@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React,{useState} from 'react'
 import { VscEye,VscEyeClosed } from 'react-icons/vsc';
-import {NavLink,useNavigate} from 'react-router-dom';
+import {Link, NavLink,useNavigate} from 'react-router-dom';
 import Input from '../../components/customInput/input';
 import Button from '../../components/customButton/button';
 import { useAppDispatch } from '../../redux/hook/hook';
@@ -48,7 +48,7 @@ const  Signup=()=> {
             <Button  className='auth-button signup-button'  type={'submit'} name={'submit'} >Sign up</Button>
         </form>
         <div className='auth-card-change'>
-            Switch to <NavLink to={'/auth/login'} >Login</NavLink>
+            Switch to <NavLink to={'/auth/login'}>Login</NavLink>
         </div>
     </div>
   )

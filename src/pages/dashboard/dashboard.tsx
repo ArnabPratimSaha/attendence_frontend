@@ -11,6 +11,8 @@ import { BiCopy } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hook/hook';
 import { clearClasses, removeClass, setClasses } from '../../redux/reducers/classReducer';
+import Loading from '../../components/loading/loading';
+import {Helmet} from "react-helmet";
 interface classDataInterface {
   id: string,
   name: string,
@@ -98,10 +100,14 @@ const Dashboard = () => {
 
     }
   }
-  if (classData === 'WAITING') return (<div>Loading</div>)
+  if (classData === 'WAITING') return (<Loading/>)
   if (classData === 'NOT_FOUND') return (<div>NOT found</div>)
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Dashboard</title>
+      </Helmet>
       <Modem id='5' status={modemStatus} onClick={() => setModemStatus(false)}>
         <form onSubmit={handleClassDelete}>
           <div className="password_data">
@@ -148,7 +154,6 @@ const Dashboard = () => {
             <div className="dashboard-classcard__right">
               <Button onClick={() =>{setModemStatus(true);classId.current=c.id}} className='print-icon delete-col' type='button' name='delete' ><RiDeleteBinLine /></Button>
             </div>
-
           </div>)}
         </div>
       </div>

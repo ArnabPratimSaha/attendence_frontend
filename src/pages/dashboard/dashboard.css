@@ -18,6 +18,7 @@
 }
 .dashboard-icon{
     font-size: 2rem;
+    color: #2C394B;
 }
 .dashboard-logo span{
     font-family: 'Gugi', cursive;
@@ -46,7 +47,7 @@
     display: flex;
     min-height: 5rem;
     background-color: #f6f6f6;
-    box-shadow: 4px 4px 7px 0 #cacaca;
+    box-shadow: 2px 2px 5px 0 #cacaca;
     margin: 10px 0;
     position: relative;
 }
@@ -57,36 +58,54 @@
     cursor: pointer;
     flex: 1;
 }
+.dashboard-classcard-classname{
+    display: block;
+}
 .dashboard-classcard-classname p{
     font-size: 1.5rem;
-    line-height: 1rem;
+    line-height: .8rem;
     margin: 0;
     padding: 0;
+    color: #FF6B6B;
     font-family: 'Comfortaa', cursive;
     font-weight: 700;
 }
 .dashboard-classcard-classname span
 {
     font-size: .6rem;
+    line-height: .2rem;
+    color: #666;
+}
+.dashboard-classcard-classinfo{
+    display: flex;
+    gap: 10px;
 }
 .classinfo-studentcount {
     display: flex;
     margin-top: 10px;
     align-items: flex-end;
+    margin-top: 1.5rem;
+}
+.classinfo-attendencecount span,.classinfo-studentcount span{
+    margin: 0;
+    padding: 0;
+    font-size: .7rem;
+    line-height: .7rem;
+    margin-left: 2px;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
 }
 .classinfo-studentcount p{
     margin: 0;
     padding: 0;
     font-size: 1.2rem;
+    color: #4D96FF;
     font-family: 'Roboto Mono', monospace;
     line-height: 1.2rem;
 }
 .classinfo-studentcount span{
-    margin: 0;
-    padding: 0;
-    font-size: .8rem;
-    line-height: .8rem;
-    font-family: 'Roboto Condensed', sans-serif;
 }
 .classinfo-attendencecount{
     display: flex;
@@ -96,16 +115,12 @@
     margin: 0;
     padding: 0;
     font-size: 1rem;
+    color: #0D7377;
+    font-size: 1.2rem;
     font-family: 'Roboto Mono', monospace;
-    line-height: 1rem;
-    margin-left: 2px;
+    line-height: 1.2rem;
 }
 .classinfo-attendencecount span{
-    margin: 0;
-    padding: 0;
-    font-size: .6rem;
-    line-height: .6rem;
-    font-family: 'Roboto Condensed', sans-serif;
 }
 .dashboard-classcard__right{
     display: flex;

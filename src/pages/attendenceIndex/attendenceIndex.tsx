@@ -11,6 +11,10 @@ import Button from '../../components/customButton/button';
 import Modem from '../../components/modem/modem';
 import Input from '../../components/customInput/input';
 import { useAppSelector } from '../../redux/hook/hook';
+import Loading from '../../components/loading/loading';
+import {Helmet} from "react-helmet";
+import HintText from '../../components/hintText/hintText';
+
 
 interface StudentIndividualData {
     id: string,
@@ -26,7 +30,7 @@ interface DateAttendance {
 }
 const AttendenceIndex = () => {
     const { cid, index } = useParams();
-    const status=useAppSelector(s=>s.user.status);
+    const status = useAppSelector(s => s.user.status);
     const [data, setData] = useState<DateAttendance | "LOADING" | "NOT_FOUND">("LOADING");
     const [access, setAccess] = useState<"RW" | "RO">('RO');
     const [modemStatus, setModemStatus] = useState<boolean>(false);
@@ -44,8 +48,6 @@ const AttendenceIndex = () => {
             if (res.status === 200 && res.data) {
                 const data: DateAttendance = res.data;
                 setData(data);
-                if (status!=='NOT_AUTHORIZED' && status!=='WAITING' && data.teachers.includes(status.id))
-                    setAccess('RW');
                 return;
             }
 
@@ -53,8 +55,15 @@ const AttendenceIndex = () => {
         }).catch(err => {
             setData('NOT_FOUND');
         })
-    }, [])
-
+    }, [status])
+    useEffect(() => {
+        if (status === 'NOT_AUTHORIZED' || status === 'WAITING' || data == 'LOADING' || data === 'NOT_FOUND') {
+            setAccess('RO');
+        } else {
+            if (data.teachers.includes(status.id)) setAccess('RW');
+            else setAccess('RO');
+        }
+    }, [status, data])
     const getPresent = useCallback((data: DateAttendance) => {
         let count: number = 0;
         data.students.forEach(s => s.remark && count++);
@@ -67,7 +76,7 @@ const AttendenceIndex = () => {
     const handleColdelete: React.FormEventHandler<HTMLFormElement> | undefined = async (ev) => {
         try {
             ev.preventDefault();
-            if (access === 'RO' || status==='NOT_AUTHORIZED' || status==='WAITING') {
+            if (access === 'RO' || status === 'NOT_AUTHORIZED' || status === 'WAITING') {
                 return setModemStatus(false);
             };
             const headers: AxiosRequestHeaders = {
@@ -93,12 +102,15 @@ const AttendenceIndex = () => {
             setModemStatus(false);
         }
     }
-    if (data === 'LOADING')
-        return (<div>Loading</div>)
+    if (data === 'LOADING') return (<Loading />)
     if (data === 'NOT_FOUND')
         return (<div>Not found</div>)
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{data.name}</title>
+            </Helmet>
             <Modem id='2' status={modemStatus} onClick={() => setModemStatus(false)}>
                 <form onSubmit={handleColdelete}>
                     <div className="password_data">
@@ -130,7 +142,7 @@ const AttendenceIndex = () => {
 
                     </div>
                     <div className="present_stat">
-                        <p>Present {getPresent(data)} Out Of {data.students.length}</p>
+                        <span>Present </span><span> {getPresent(data)} </span><span> Out Of </span><span> {data.students.length}</span>
                         <p>({(getPresent(data) / data.students.length * 100).toFixed(1)}%)</p>
                     </div>
                 </div>
@@ -143,7 +155,9 @@ const AttendenceIndex = () => {
                             </div>
                             <div className="card__student__id">
                                 <span>{a.id}</span>
-                                <BiCopy className='copytoclipboard-icon' />
+                                <HintText text='Copy to Clipboard' className='copytoclipboard-icon'>
+                                    <BiCopy onClick={()=>navigator.clipboard.writeText(a.id)} />
+                                </HintText>
                             </div>
                         </div>
                         {a.remark && <p className='present-p'>Present</p>}

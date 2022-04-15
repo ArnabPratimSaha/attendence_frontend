@@ -19,10 +19,9 @@
 }
 .attendenceindex-infodiv{
     background-color: #eeeeee;
-    padding: 1rem 10px;
+    padding: 1.5rem 10px;
     box-sizing: border-box;
     border-radius: 10px;
-    height: 8rem;
 }
 .attendenceindex-classheader{
     display: flex;
@@ -47,10 +46,11 @@
 .attendenceindex-classData p{
     margin: 0;
     padding: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1rem;
     font-weight: 600;
     font-family: 'Roboto Condensed', sans-serif;
+    color: #213E3B;
 }
 .attendenceindex-classData span{
     font-family: 'Roboto Mono', monospace;
@@ -58,24 +58,35 @@
     line-height: .6rem;
     margin: 0;
     padding: 0;
+    color: #666;
 
 }
 .attendenceindex-datediv p{
     margin: 0;
     padding: 0;
-    font-size: .8rem;
+    font-size: 1rem;
+    color: #4D96FF;
 }
 .present_stat{
     display: flex;
 }
-.present_stat p{
-    font-size: .7rem;
+.present_stat p,.present_stat span{
+    font-size: 1.2rem;
     margin: 0;
     padding: 0;
     margin-right: 10px;
     font-family: 'Roboto Condensed', sans-serif;
 }
-.present_stat p:nth-child(2){
+.present_stat span{
+    margin-right: 7px;
+}
+.present_stat span:nth-child(2){
+    color: #6BCB77;
+}
+.present_stat span:nth-child(4){
+    color: #4D96FF;
+}
+.present_stat p{
     font-weight: 600;
 }
 .copytoclipboard-icon{
@@ -91,6 +102,7 @@
     border-radius: 5px;
     display: flex;
     align-items: center;
+    
 }
 .attendenceindex-attendance__card__student{
     flex: 1;
@@ -116,10 +128,19 @@
 .card__student__id span{
     font-family: 'Roboto Mono', monospace;
     font-size: .5rem;
+    color: #666;
+    
+}
+.card__odd,.card__even{
+    margin: 10px 0;
+    box-shadow: 0 0 3px 0 #cacaca;
     
 }
 .card__odd{
-    background-color: #f6f6f6;
+    background-color: #f3f3f3;
+}
+.card__even{
+    background-color: #fff;
 }
 .present-p,.absent-p{
     font-family: 'Comfortaa', cursive;

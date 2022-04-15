@@ -13,6 +13,9 @@ import Input from '../../components/customInput/input';
 import Modem from '../../components/modem/modem';
 import { useAppDispatch, useAppSelector } from '../../redux/hook/hook';
 import { setData, setStatus, update } from '../../redux/reducers/attendenceReducer';
+import Loading from '../../components/loading/loading';
+import {Helmet} from 'react-helmet'
+
 function Attendance() {
     const { cid } = useParams();
     const [modemStatus,setModemStatus]=useState<boolean>(false);
@@ -206,14 +209,16 @@ function Attendance() {
       },
       [attendence],
     )
+    if(attendence==='WAITING')return (<Loading/>)
     if(attendence==='NOT_FOUND'){
        return( <div>Not Found</div>)
     }
-    if(attendence==='WAITING'){
-        return(<div>Loading</div>)
-    }
     return (
         <div className='attendence-topdiv'>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{attendence.name}</title>
+            </Helmet>
             <Modem id='1' status={modemStatus} onClick={()=>setModemStatus(false)}>
                 <form onSubmit={handleStudentAddSubmit}>
                     <div className="student__add_data">

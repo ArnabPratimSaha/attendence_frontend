@@ -4,6 +4,7 @@ import { useStore } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/customButton/button';
 import * as animationData from './calendar.json';
+import {Helmet} from 'react-helmet'
 import './intro.css';
 function Intro() {
   const [isStopped, setIsStopped] = useState<boolean>(false);
@@ -11,6 +12,10 @@ function Intro() {
   const navigate=useNavigate();
   return (
     <div className='intro-fulldiv'>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>home</title>
+      </Helmet>
       <div className="intro-topdiv">
         <div className="topintro-leftdiv">
           <div className="leftdiv-top">

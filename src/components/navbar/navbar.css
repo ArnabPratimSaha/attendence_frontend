@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 3.5rem;
 }
 .navbar-leftdiv{
     display: flex;
@@ -28,7 +29,7 @@
     font-weight: 600;
 }
 .nav-active{
-    color: #0D7377;
+    color: #4D96FF;
 }
 .navlink-login{
     background-color: #0D7377;

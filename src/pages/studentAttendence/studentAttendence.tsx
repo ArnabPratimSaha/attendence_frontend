@@ -12,6 +12,8 @@ import { AiFillPrinter } from 'react-icons/ai';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import ReactToPrint from 'react-to-print';
 import { useAppSelector } from '../../redux/hook/hook';
+import Loading from '../../components/loading/loading';
+import {Helmet} from "react-helmet";
 
 const StudentAttendence = () => {
     const { cid, sid } = useParams();
@@ -38,15 +40,21 @@ const StudentAttendence = () => {
             if (res.status === 200 && res.data) {
                 const data: StudentCombineDataInterface = res.data;
                 setStudent(data);
-                if (status!=='WAITING' && status!=='NOT_AUTHORIZED' && data.teachers.includes(status.id))
-                    setAccess('RW');
                 return;
             }
             setStudent('NOT_FOUND');
         }).catch(err => {
             setStudent('NOT_FOUND');
         })
-    }, [])
+    }, [status])
+    useEffect(()=>{
+        if(status==='NOT_AUTHORIZED'||status==='WAITING'||student=='LOADING'||student==='NOT_FOUND'){
+            setAccess('RO');
+        }else{
+            if(student.teachers.includes(status.id))setAccess('RW');
+            else setAccess('RO');
+        }
+    },[status,student])
     const handleStudentDelete: React.FormEventHandler<HTMLFormElement> | undefined = async (ev) => {
         try {
             ev.preventDefault();
@@ -77,12 +85,15 @@ const StudentAttendence = () => {
         }
     }
 
-    if (student === 'LOADING')
-        return (<div>Loading</div>)
+    if (student === 'LOADING')return (<Loading/>)
     if (student === 'NOT_FOUND')
         return (<div>Not found</div>)
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{student.name}</title>
+            </Helmet>
          <Modem id='3' status={modemStatus} onClick={() => setModemStatus(false)}>
                 <form onSubmit={handleStudentDelete}>
                     <div className="password_data">
