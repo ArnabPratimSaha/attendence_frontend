@@ -29,7 +29,6 @@
     background-color: transparent;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.5rem;
-    height: 1.6rem;
     font-weight: 600;
     box-sizing: border-box;
 }
@@ -43,7 +42,6 @@
 }
 .infodiv__attribute-roll input,.infodiv__attribute-roll span{
     font-size: 1.2rem;
-    height: 1.3rem;
     color: #444;
 }
 .infodiv__attribute-name input{
