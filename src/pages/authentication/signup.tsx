@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import React,{useState} from 'react'
 import { VscEye,VscEyeClosed } from 'react-icons/vsc';
 import {Link, NavLink,useNavigate} from 'react-router-dom';
@@ -14,7 +14,7 @@ const  Signup=()=> {
     const [password,setPassword]=useState<string>('');
     const navigate=useNavigate();
     const dispatch=useAppDispatch();
-
+    const [response,setResponse]=useState<"IDLE"|"REQUESTING"|AxiosError>('IDLE');
     const handleFormSubmit:React.FormEventHandler<HTMLFormElement> | undefined=async(event):Promise<void>=>{
         try {
             event.preventDefault();
@@ -32,7 +32,9 @@ const  Signup=()=> {
             }
             
         } catch (error) {
-            
+            if(axios.isAxiosError(error)){
+                setResponse(error);
+            }
         }
     }
   return (
@@ -47,6 +49,11 @@ const  Signup=()=> {
             </div>
             <Button  className='auth-button signup-button'  type={'submit'} name={'submit'} >Sign up</Button>
         </form>
+        <div className="form-response">
+            {response!=='REQUESTING'&&response!=='IDLE'&& response.response &&<div className='form-error'>
+                <span>{response.response.data}</span> 
+            </div>}
+        </div>
         <div className='auth-card-change'>
             Switch to <NavLink to={'/auth/login'}>Login</NavLink>
         </div>

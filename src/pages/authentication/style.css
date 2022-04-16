@@ -64,3 +64,16 @@
 .signup-button{
     background-color: #FF6B6B;
 }
+.form-response{
+    min-height: 2rem;
+    min-width: 1rem;
+}
+.form-error span{
+    font-size: .8rem;
+    letter-spacing: 2px;
+    line-height: .8rem;
+    font-family: 'Gugi', cursive;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FF6B6B;
+}

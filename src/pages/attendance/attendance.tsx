@@ -22,7 +22,7 @@ function Attendance() {
     const [modemStatus,setModemStatus]=useState<boolean>(false);
     const status=useAppSelector(s=>s.user.status);
     const attendence=useAppSelector(s=>s.attendence.status)
-    const [sort,setSort]=useState<boolean>(true);
+    const sort=useAppSelector(s=>s.attendence.sort);
     const [access, setAccess] = useState<"RO" | "RW">('RO');
     const dispatch=useAppDispatch();
     const [name,setName]=useState<string>('');
@@ -41,7 +41,7 @@ function Attendance() {
             });
             if(res.status===200){
                 const data: ClassInterface = res.data;
-                dispatch(setData({data,sort:sort?'ASCEND':'DECEND'}))
+                dispatch(setData({data}))
             }
         } catch (error) {
             throw error;
@@ -52,9 +52,6 @@ function Attendance() {
             setAccess( s=> attendence.teachers.includes(status.id)?'RW':'RO');
         }
     },[status,attendence])
-    useEffect(()=>{
-        dispatch(sortAttandance(sort?'ASCEND':'DECEND'));
-    },[sort])
     useEffect(() => {
         axios({
             url: `${process.env.REACT_APP_BACKEND}/class`,
@@ -65,7 +62,7 @@ function Attendance() {
         }).then(res => {
             if (res.status === 200 && res.data) {
                 const data: ClassInterface = res.data;
-                return dispatch(setData({data,sort:sort?'ASCEND':'DECEND'}))
+                return dispatch(setData({data}))
             }
             dispatch(setStatus('NOT_FOUND'));
         }).catch(err=>{
@@ -244,7 +241,7 @@ function Attendance() {
                     <span>Students</span>
                     <div className="attendance-label_button">
                         {access==='RW' &&<Button name='add' type='button' className='student-add' onClick={()=>setModemStatus(true)}>{ device==='MOBILE'?<IoMdAddCircleOutline/>:'Add Student'}</Button>}
-                        <div className={`${sort?'sort_active':'sort_inactive'}`} onClick={()=>setSort(s=>!s)}><BsSortDownAlt/></div> 
+                        <div className={`${sort==='ASCEND'?'sort_active':'sort_inactive'}`} onClick={()=>dispatch(sortAttandance(sort==='ASCEND'?'DECEND':'ASCEND'))}><BsSortDownAlt/></div> 
                     </div>
                 </div>
                 <div className='attendance-date' id='top'>
