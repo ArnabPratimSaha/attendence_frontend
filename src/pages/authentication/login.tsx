@@ -1,19 +1,21 @@
 import React,{useState} from 'react'
 import { VscEye,VscEyeClosed } from 'react-icons/vsc';
 import {NavLink,useNavigate} from 'react-router-dom';
-import axios from 'axios';
+import axios,{AxiosError} from 'axios';
 import Cookies from 'js-cookie';
 import AuthResponse from '../../interfaces/authResponseData';
 import Input from '../../components/customInput/input';
 import Button from '../../components/customButton/button';
 import { login, User } from '../../redux/reducers/userReducer';
 import { useAppDispatch } from '../../redux/hook/hook';
+
 function Login() {
     const [showPassword,setShowPassword]=useState<boolean>(false);
     const [email,setEmail]=useState<string>('');
     const [password,setPassword]=useState<string>('');
     const navigate=useNavigate();
-    const dispatch=useAppDispatch()
+    const dispatch=useAppDispatch();
+    const [response,setResponse]=useState<"IDLE"|"REQUESTING"|AxiosError>('IDLE');
     const handleFormSubmit:React.FormEventHandler<HTMLFormElement> | undefined=async(event):Promise<void>=>{
         try {
             event.preventDefault();
@@ -36,8 +38,7 @@ function Login() {
             
         } catch (error) {
             if(axios.isAxiosError(error)){
-                console.log({err:error});
-                
+                setResponse(error);
             }
         }
     }
@@ -52,6 +53,11 @@ function Login() {
             </div>
             <Button  className='auth-button login-button'  type={'submit'} name={'submit'} >Login</Button>
         </form>
+        <div className="form-response">
+            {response!=='REQUESTING'&&response!=='IDLE'&& response.response &&<div className='form-error'>
+                <span>{response.response.data}</span> 
+            </div>}
+        </div>
         <div className='auth-card-change'>
             Switch to <NavLink to={'/auth/signup'} >Sign up</NavLink>
         </div>

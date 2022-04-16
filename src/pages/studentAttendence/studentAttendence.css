@@ -20,20 +20,49 @@
     flex: 1;
     
 }
-.studentAttendence-infodiv__attribute p{
-    margin: 0;
-    padding: 0;
+.infodiv__attribute-roll,.infodiv__attribute-name{
+    margin-bottom: 10px;
 }
-.studentAttendence-infodiv__attribute p:nth-child(1){
+.infodiv__attribute-name input,.infodiv__attribute-name span,.infodiv__attribute-roll input,.infodiv__attribute-roll span{
+    background-color: transparent;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.5rem;
     line-height: 1rem;
+    height: 1.5rem;
     font-weight: 600;
+    box-sizing: border-box;
 }
-.studentAttendence-infodiv__attribute p:nth-child(2){
-    font-family: 'Roboto Mono', monospace;
+.infodiv__attribute-name input,.infodiv__attribute-roll input{
+    border: .1px solid #666;
+    border-radius: 5px;
+    background-color: #f8f8f8;
 }
-.studentAttendence-infodiv__attribute span
+.infodiv__attribute-name input:focus,.infodiv__attribute-roll input:focus{
+    outline: none;
+}
+.infodiv__attribute-roll input,.infodiv__attribute-roll span{
+    font-size: 1.2rem;
+    color: #444;
+}
+.infodiv__attribute-name input{
+    padding: 0;
+}
+.field-update-icon{
+    margin-left: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+.icon-roll{
+    font-size: 1.2rem;
+}
+.icon-update{
+    color: #6BCB77;
+}
+.icon-cancle{
+    color: #FF6B6B;
+}
+.student-idspan
 {
     font-family: 'Roboto Mono', monospace;
     font-size: .6rem;
@@ -76,5 +105,8 @@
     .studentAttendence-fulldiv{
         padding: .8rem;
         padding-top: 2rem;
+    }
+    .infodiv__attribute-name input,.infodiv__attribute-roll input{
+        width: 60%;
     }
 }

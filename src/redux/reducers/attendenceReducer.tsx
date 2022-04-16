@@ -3,10 +3,12 @@ import Cookies from 'js-cookie';
 import type { RootState } from './allReducer';
 import { ClassInterface,Student } from '../../interfaces/classData';
 export interface Attendence{
-    status:"WAITING"|"NOT_FOUND"|ClassInterface
+    status:"WAITING"|"NOT_FOUND"|ClassInterface,
+    sort:"ASCEND"|"DECEND"
 }
 const initialState:Attendence={
     status:'WAITING',
+    sort:'ASCEND'
 }
 interface UpdateInterface{
     sid:string,
@@ -14,8 +16,7 @@ interface UpdateInterface{
     remark:boolean,
 }
 interface AttendanceAddInterface{
-    data:ClassInterface,
-    sort:"ASCEND"|"DECEND"
+    data:ClassInterface
 }
 
 export const attendanceSlice=createSlice({
@@ -23,7 +24,7 @@ export const attendanceSlice=createSlice({
     initialState,
     reducers:{
         setData:(state,data:PayloadAction<AttendanceAddInterface>)=>{
-            if(data.payload.sort==='ASCEND')
+            if(state.sort==='ASCEND')
                 data.payload.data.students = data.payload.data.students.sort((a, b) => +a.roll - +b.roll);
             else 
                 data.payload.data.students = data.payload.data.students.sort((a, b) => +b.roll - +a.roll);
@@ -42,6 +43,7 @@ export const attendanceSlice=createSlice({
         },
         sortAttandance:(status,data:PayloadAction<"ASCEND"|"DECEND">)=>{
             if(status.status==='NOT_FOUND'||status.status==='WAITING')return;
+            status.sort=data.payload;
             if(data.payload==='ASCEND')
                 status.status.students=status.status.students.sort((a,b)=>+a.roll-+b.roll)
             else
