@@ -28,7 +28,6 @@ function Attendance() {
     const [name,setName]=useState<string>('');
     const [roll,setRoll]=useState<string>('');
     const navigate=useNavigate();
-    const targetRef=useRef<HTMLDivElement | null>(null);
     const fetchData=useCallback(async():Promise<void>=>{
         try {
             if(status==='WAITING'|| status==='NOT_AUTHORIZED'||attendence==='NOT_FOUND'||attendence==='WAITING')return;
@@ -288,6 +287,7 @@ function Attendance() {
                             access={access}
                             sidArray={attendence.students.map(s => s.id)}
                         />)}
+                        {access ==='RW' && <div  className="attendence-rightdiv__add"></div>}
                     </div>
                 </div>
                 {attendence.students.length!==0&&<div className="attendance-student-stat">
