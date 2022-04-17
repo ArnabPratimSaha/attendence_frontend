@@ -2,6 +2,7 @@ import axios,{AxiosRequestHeaders} from 'axios';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom';
+import Loading from '../../components/loading/loading';
 import { useAppSelector } from '../../redux/hook/hook';
 import Intro from '../intro/intro';
 import './style.css';
@@ -16,9 +17,7 @@ const Error=()=>{
 const Protected=()=> {
     const status=useAppSelector((s)=>s.user.status)
     if(status==='WAITING'){
-        return (<div className='protected-full-div'>
-            loading
-        </div>)
+        return <Loading/>
     }
     if(status==='NOT_AUTHORIZED'){
         return(<Error/>) 
