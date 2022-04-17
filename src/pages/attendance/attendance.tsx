@@ -99,11 +99,15 @@ function Attendance() {
             bottom.removeEventListener('scroll',ev2);
         }
         if (top && bottom) {
-            if(device==='MOBILE'){
+            //scroll-1 choppy but reliable
+                // bottom.addEventListener('scroll', ev1)
+                // top.addEventListener('scroll', ev2)
+            //scroll-2 smooth but unreliable
+            if (device === 'MOBILE') {
                 bottom.addEventListener('scroll',ev1)
                 top.ontouchmove=(e:Event)=>{
+                    if(attendence==='NOT_FOUND'||attendence==='WAITING'||attendence.students.length===0)return;
                     e.preventDefault();
-                    top.scrollLeft+=0;
                 }
             }else{
                 top.addEventListener('scroll', ev2)
