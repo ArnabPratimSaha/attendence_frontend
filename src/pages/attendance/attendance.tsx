@@ -185,7 +185,7 @@ function Attendance() {
                 ['classid']:cid||''
             }
             const res=await axios({
-                url: `${process.env.REACT_APP_BACKEND}/class/student`,
+                url: `${process.env.REACT_APP_BACKEND}/student`,
                 method: 'POST',
                 data:{
                     name,roll
