@@ -142,11 +142,11 @@ const Dashboard = () => {
               </div>
               <div className="dashboard-classcard-classinfo">
                 <div className="classinfo-studentcount">
-                  <p>{c.students.length}</p>
+                  <p>{c.studentCount}</p>
                   <span>students</span>
                 </div>
                 <div className="classinfo-attendencecount">
-                  <p>{c.attendanceArray.length}</p>
+                  <p>{c.recordCount}</p>
                   <span>attendence</span>
                 </div>
               </div>
