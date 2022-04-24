@@ -4,9 +4,10 @@ import type { RootState } from './allReducer';
 export interface ClassDataInterface {
     id: string,
     name: string,
-    teachers: Array<string>,
-    students: Array<string>,
-    attendanceArray: Array<string>,
+    teacher: string,
+    studentCount: number,
+    recordCount: number,
+    createdAt:string
 }
 interface classInterface{
     status:'NOT_FOUND'|'WAITING'|ClassDataInterface[]
