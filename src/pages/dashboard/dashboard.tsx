@@ -86,7 +86,7 @@ const Dashboard = () => {
         ['refreshtoken']: status.refreshtoken
       }
       const res = await axios({
-        url: `${process.env.REACT_APP_BACKEND}/class/create`,
+        url: `${process.env.REACT_APP_BACKEND}/class`,
         method: 'POST',
         data: {
           name
